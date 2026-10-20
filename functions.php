@@ -1,18 +1,36 @@
 <?php
+/**
+ * =======================================================================
+ * File: functions.php (Processing Layer)
+ * =======================================================================
+ * Berisi fungsi-fungsi pemrosesan logika bisnis dan pendukung tampilan.
+ */
 
-
-function hitungTotalNilaiStok($data_produk) {
+/**
+ * Menghitung total nilai aset gudang (akumulasi harga * stok untuk semua produk)
+ *
+ * @param array $products
+ * @return int|float
+ */
+function hitungTotalNilaiStok($products) {
     $total = 0;
-    foreach ($data_produk as $item) {
+    foreach ($products as $item) {
         $total += ($item['harga'] * $item['stok']);
     }
     return $total;
 }
 
-
-function getBarisWarna($stok) {
+/**
+ * Mengecek status stok dan mengembalikan nama class CSS:
+ * Mengembalikan 'stok-kritis' jika stok di bawah 3 (< 3),
+ * atau string kosong '' jika stok berada dalam batas aman.
+ *
+ * @param int $stok
+ * @return string
+ */
+function cekStatusStok($stok) {
     if ($stok < 3) {
-        return 'background-color: #ffe6e6; color: #cc0000;'; // Memberi warna merah muda pada baris
+        return 'stok-kritis';
     }
     return '';
 }
